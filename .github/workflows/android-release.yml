@@ -2,10 +2,10 @@ name: Android CI/CD Release & Auto-Update
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
     branches:
       - main
+    tags:
+      - 'v*.*.*'
   workflow_dispatch:
     inputs:
       version_name:
@@ -55,7 +55,7 @@ jobs:
             TAG_NAME="v${VERSION_NAME}"
           fi
           
-          # Compute numeric versionCode: e.g. 1.0.1 -> 10001
+          # Compute numeric versionCode: e.g. 1.0.0 -> 10000
           IFS='.' read -r major minor patch <<< "$VERSION_NAME"
           major=${major:-1}
           minor=${minor:-0}
@@ -106,19 +106,24 @@ jobs:
           echo "Generated version.json:"
           cat release-artifacts/version.json
 
+      - name: 📤 Upload Build Artifacts (Actions Tab)
+        uses: actions/upload-artifact@v4
+        with:
+          name: NabdAlDhikr-v${{ env.VERSION_NAME }}-APK
+          path: release-artifacts/*
+
       - name: 🚀 Publish GitHub Release
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
         with:
           tag_name: ${{ env.TAG_NAME }}
           name: "نبض الذكر ${{ env.TAG_NAME }}"
           body: |
             ### 🌟 نبض الذكر (Nabd Al-Dhikr) - ${{ env.TAG_NAME }}
             
-            تحديث تلقائي جديد لتطبيق نبض الذكر للأندرويد.
+            تطبيق إسلامي حديث ومتطور للأندرويد.
             
             #### 📱 التغييرات والمميزات:
-            ${{ github.event.inputs.changelog || '• تحسينات عامة في الأداء واستقرار البوصلة والسبحة.' }}
+            ${{ github.event.inputs.changelog || '• موسوعة الأذكار الشاملة والمحققة (171 ذكراً عبر 28 قسماً).\n• محدد اتجاه القبلة الذكي فلكياً.\n• السبحة الإلكترونية الذكية التفاعلية.\n• نظام التحديث التلقائي المباشر (OTA Self-Update).' }}
             
             ---
             **حجم التطبيق:** ~2.22 MB  

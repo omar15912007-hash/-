@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#0A1F19</color>
+    <color name="screen_bg">#0A1F19</color>
+    <color name="header_bg">#12432E</color>
+    <color name="card_bg">#17452F</color>
+    <color name="primary_gold">#C9A24D</color>
+    <color name="completed_green">#57B96C</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B0B7B3</color>
+</resources>

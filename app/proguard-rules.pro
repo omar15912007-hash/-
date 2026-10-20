@@ -8,3 +8,7 @@
 
 # WorkManager يكتشف العمال عبر الانعكاس
 -keep class com.nabdaldhikr.app.reminder.** { *; }
+
+# Updater Data Models
+-keep class com.nabdaldhikr.app.updater.** { *; }
+-keepattributes *Annotation*

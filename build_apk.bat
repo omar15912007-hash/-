@@ -11,7 +11,7 @@ if %ERRORLEVEL% EQU 0 (
     copy /Y "F:\omar\New folder\app\build\outputs\apk\release\app-release.apk" "%USERPROFILE%\Desktop\NabdAlDhikr.apk"
     copy /Y "F:\omar\New folder\app\build\outputs\apk\release\app-release.apk" "F:\omar\New folder\NabdAlDhikr.apk"
     echo ========================================================
-    echo BUILD SUCCESSFUL! Ultra-compact Release APK (2.22 MB)
+    echo BUILD SUCCESSFUL! Ultra-compact Release APK [2.24 MB]
     echo Output: "%USERPROFILE%\Desktop\NabdAlDhikr.apk"
     echo ========================================================
 ) else (

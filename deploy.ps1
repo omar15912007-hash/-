@@ -67,7 +67,7 @@ $jsonContent = @"
 {
   "versionCode": $newCode,
   "versionName": "$newVersion",
-  "apkUrl": "https://github.com/omar15912007-hash/-/releases/download/$tagName/app-release.apk",
+  "apkUrl": "https://github.com/omar15912007-hash/Nabd-Al-Dhikr/releases/download/$tagName/app-release.apk",
   "changelog": "$Message",
   "forceUpdate": $isForce
 }
@@ -86,5 +86,5 @@ Write-Host "`n🚀 Pushing to GitHub (origin main --tags)..." -ForegroundColor C
 Write-Host "`n==========================================================" -ForegroundColor Green
 Write-Host " ✅ DEPLOY SUCCESSFUL! Tag: $tagName" -ForegroundColor Green
 Write-Host " GitHub Actions is now building and releasing your APK!" -ForegroundColor Yellow
-Write-Host " URL: https://github.com/omar15912007-hash/-/actions" -ForegroundColor Cyan
+Write-Host " URL: https://github.com/omar15912007-hash/Nabd-Al-Dhikr/actions" -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Green

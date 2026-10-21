@@ -8,9 +8,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.CornerRadius
@@ -34,10 +36,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
+import com.nabdaldhikr.app.BuildConfig
 import com.nabdaldhikr.app.R
 import com.nabdaldhikr.app.reminder.ReminderScheduler
 import com.nabdaldhikr.app.ui.theme.*
+import com.nabdaldhikr.app.updater.AppUpdateDialog
+import com.nabdaldhikr.app.updater.AppUpdateManager
+import com.nabdaldhikr.app.updater.UpdateInfo
+import com.nabdaldhikr.app.updater.UpdateState
 import com.nabdaldhikr.app.viewmodel.SettingsViewModel
+import kotlinx.coroutines.launch
 
 private val TickFractions = floatArrayOf(0.25f, 0.5f, 0.75f)
 
@@ -53,6 +61,11 @@ fun SettingsScreen(
     val reminderEnabled by viewModel.reminderEnabled.collectAsState()
 
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+    var isCheckingUpdate by remember { mutableStateOf(false) }
+    var updateDialogInfo by remember { mutableStateOf<UpdateInfo?>(null) }
+
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
@@ -78,6 +91,16 @@ fun SettingsScreen(
 
     Scaffold(
         containerColor = ScreenBg,
+        snackbarHost = {
+            SnackbarHost(snackbarHostState) { data ->
+                Snackbar(
+                    snackbarData = data,
+                    containerColor = HeaderBg,
+                    contentColor = TextPrimary,
+                    shape = RoundedCornerShape(12.dp)
+                )
+            }
+        },
         topBar = {
             TopAppBar(
                 title = { Text("الإعدادات", fontWeight = FontWeight.Bold) },
@@ -265,9 +288,9 @@ fun SettingsScreen(
             
             HorizontalDivider(color = ProgressTrack.copy(alpha = 0.4f))
             
-            // عن التطبيق
+            // عن التطبيق والتحديثات
             Text(
-                text = "عن التطبيق",
+                text = "عن التطبيق والتحديثات",
                 color = PrimaryGold,
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
@@ -278,7 +301,7 @@ fun SettingsScreen(
                 colors = itemColors,
                 headlineContent = { Text("نبض الذكر", fontWeight = FontWeight.Bold, fontSize = 17.sp) },
                 supportingContent = { 
-                    Text("الإصدار 1.0 (عصري)\nالمصدر المعتمد: كتاب حصن المسلم\n«أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ»") 
+                    Text("الإصدار v${BuildConfig.VERSION_NAME} (مُحدَّث)\nالمصدر المعتمد: كتاب حصن المسلم\n«أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ»") 
                 },
                 leadingContent = { 
                     Image(
@@ -291,8 +314,93 @@ fun SettingsScreen(
                     )
                 }
             )
+
+            HorizontalDivider(color = ProgressTrack.copy(alpha = 0.4f))
+
+            ListItem(
+                colors = itemColors,
+                modifier = Modifier.clickable(enabled = !isCheckingUpdate) {
+                    isCheckingUpdate = true
+                    coroutineScope.launch {
+                        when (val state = AppUpdateManager.checkForUpdate()) {
+                            is UpdateState.UpdateAvailable -> {
+                                isCheckingUpdate = false
+                                updateDialogInfo = state.info
+                            }
+                            is UpdateState.UpToDate -> {
+                                isCheckingUpdate = false
+                                snackbarHostState.showSnackbar("تطبيقك محدث إلى أحدث إصدار متاح بالفعل (v${BuildConfig.VERSION_NAME})")
+                            }
+                            is UpdateState.Error -> {
+                                isCheckingUpdate = false
+                                snackbarHostState.showSnackbar("تعذر التحقق: ${state.message}")
+                            }
+                            else -> {
+                                isCheckingUpdate = false
+                            }
+                        }
+                    }
+                },
+                headlineContent = { Text("التحقق من وجود تحديثات", fontWeight = FontWeight.SemiBold) },
+                supportingContent = { 
+                    Text(
+                        if (isCheckingUpdate) "جاري فحص خوادم التحديث..." 
+                        else "تحديث التطبيق وتثبيته تلقائياً من داخل البرنامج بنقرة واحدة"
+                    ) 
+                },
+                leadingContent = { 
+                    Icon(AppIcons.SystemUpdate, contentDescription = null, tint = PrimaryGold) 
+                },
+                trailingContent = {
+                    if (isCheckingUpdate) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            color = PrimaryGold,
+                            strokeWidth = 2.5.dp
+                        )
+                    } else {
+                        OutlinedButton(
+                            onClick = {
+                                isCheckingUpdate = true
+                                coroutineScope.launch {
+                                    when (val state = AppUpdateManager.checkForUpdate()) {
+                                        is UpdateState.UpdateAvailable -> {
+                                            isCheckingUpdate = false
+                                            updateDialogInfo = state.info
+                                        }
+                                        is UpdateState.UpToDate -> {
+                                            isCheckingUpdate = false
+                                            snackbarHostState.showSnackbar("تطبيقك محدث إلى أحدث إصدار متاح بالفعل (v${BuildConfig.VERSION_NAME})")
+                                        }
+                                        is UpdateState.Error -> {
+                                            isCheckingUpdate = false
+                                            snackbarHostState.showSnackbar("تعذر التحقق: ${state.message}")
+                                        }
+                                        else -> {
+                                            isCheckingUpdate = false
+                                        }
+                                    }
+                                }
+                            },
+                            shape = RoundedCornerShape(8.dp),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, PrimaryGold),
+                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)
+                        ) {
+                            Text("فحص الآن", color = PrimaryGold, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                }
+            )
             
             Spacer(modifier = Modifier.height(32.dp))
+        }
+
+        // Render In-App Update Dialog if manual check finds an update
+        updateDialogInfo?.let { info ->
+            AppUpdateDialog(
+                updateInfo = info,
+                onDismiss = { updateDialogInfo = null }
+            )
         }
     }
 }

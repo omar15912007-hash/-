@@ -39,8 +39,9 @@ class MainActivity : ComponentActivity() {
 
             var updateInfo by remember { mutableStateOf<UpdateInfo?>(null) }
 
-            // Automatic In-App Update Check on App Launch
+            // Automatic In-App Update Check on App Launch (graceful background check)
             LaunchedEffect(Unit) {
+                kotlinx.coroutines.delay(1500)
                 val state = AppUpdateManager.checkForUpdate()
                 if (state is UpdateState.UpdateAvailable) {
                     updateInfo = state.info

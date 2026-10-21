@@ -82,7 +82,7 @@ sealed class UpdateState {
 object AppUpdateManager {
 
     private const val GITHUB_OWNER = "omar15912007-hash"
-    private const val GITHUB_REPO = "-"
+    private const val GITHUB_REPO = "Nabd-Al-Dhikr"
 
     const val RAW_VERSION_URL =
         "https://raw.githubusercontent.com/$GITHUB_OWNER/$GITHUB_REPO/main/version.json"
@@ -105,13 +105,19 @@ object AppUpdateManager {
                 readTimeout = 8000
                 requestMethod = "GET"
                 setRequestProperty("Accept", "application/json")
+                setRequestProperty("User-Agent", "NabdAlDhikr-App")
             }
 
             if (conn.responseCode in 200..299) {
                 val json = conn.inputStream.bufferedReader().use { it.readText() }
                 val info = Gson().fromJson(json, UpdateInfo::class.java)
                 if (info != null && info.versionCode > BuildConfig.VERSION_CODE) {
-                    return@withContext UpdateState.UpdateAvailable(info)
+                    val resolvedApkUrl = if (info.apkUrl.isNotBlank() && !info.apkUrl.contains("/-/")) {
+                        info.apkUrl
+                    } else {
+                        "https://github.com/$GITHUB_OWNER/$GITHUB_REPO/releases/download/v${info.versionName}/app-release.apk"
+                    }
+                    return@withContext UpdateState.UpdateAvailable(info.copy(apkUrl = resolvedApkUrl))
                 } else if (info != null) {
                     return@withContext UpdateState.UpToDate
                 }
@@ -217,8 +223,8 @@ object AppUpdateManager {
             // Handle HTTP 302 redirects if needed
             var finalConnection = connection
             var redirectCount = 0
-            while (finalConnection.responseCode in listOf(301, 302, 303, 307, 308) && redirectCount < 5) {
-                val newUrl = finalConnection.getHeaderField("Location")
+            while (finalConnection.responseCode in listOf(301, 302, 303, 307, 308) && redirectCount < 6) {
+                val newUrl = finalConnection.getHeaderField("Location") ?: break
                 finalConnection.disconnect()
                 finalConnection = (URL(newUrl).openConnection() as HttpURLConnection).apply {
                     connectTimeout = 15000
@@ -235,8 +241,9 @@ object AppUpdateManager {
                 )
             }
 
-            val totalBytes = finalConnection.contentLength.toLong()
-            val targetFile = File(context.cacheDir, "nabd_aldhikr_update.apk")
+            val totalBytes = finalConnection.contentLengthLong
+            val updateDir = context.externalCacheDir ?: context.cacheDir
+            val targetFile = File(updateDir, "nabd_aldhikr_update.apk")
             if (targetFile.exists()) {
                 targetFile.delete()
             }

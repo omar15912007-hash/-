@@ -1,16 +1,24 @@
 package com.nabdaldhikr.app
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.nabdaldhikr.app.reminder.ReminderScheduler
 import com.nabdaldhikr.app.ui.navigation.AppNavigation
 import com.nabdaldhikr.app.ui.theme.NabdAlDhikrTheme
 import com.nabdaldhikr.app.updater.AppUpdateDialog
@@ -29,15 +37,38 @@ class MainActivity : ComponentActivity() {
         )
         
         setContent {
+            val context = LocalContext.current
             val settingsViewModel: SettingsViewModel = viewModel()
             val isDarkMode by settingsViewModel.isDarkMode.collectAsState()
             val fontScale by settingsViewModel.fontScale.collectAsState()
+
             val currentDensity = LocalDensity.current
             val scaledDensity = remember(currentDensity, fontScale) {
                 Density(density = currentDensity.density, fontScale = currentDensity.fontScale * fontScale)
             }
 
             var updateInfo by remember { mutableStateOf<UpdateInfo?>(null) }
+
+            // Notification permission request for Android 13+ (POST_NOTIFICATIONS)
+            val notificationLauncher = rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.RequestPermission()
+            ) { isGranted ->
+                if (isGranted) {
+                    ReminderScheduler.schedule(context, true)
+                }
+            }
+
+            LaunchedEffect(Unit) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    val hasPerm = ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) == PackageManager.PERMISSION_GRANTED
+                    if (!hasPerm) {
+                        notificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    }
+                }
+            }
 
             // Automatic In-App Update Check on App Launch (graceful background check)
             LaunchedEffect(Unit) {

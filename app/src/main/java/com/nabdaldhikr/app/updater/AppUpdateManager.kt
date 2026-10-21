@@ -27,6 +27,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.FileProvider
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -115,7 +118,7 @@ object AppUpdateManager {
                     val resolvedApkUrl = if (info.apkUrl.isNotBlank() && !info.apkUrl.contains("/-/")) {
                         info.apkUrl
                     } else {
-                        "https://github.com/$GITHUB_OWNER/$GITHUB_REPO/releases/download/v${info.versionName}/app-release.apk"
+                        "https://github.com/$GITHUB_OWNER/$GITHUB_REPO/releases/download/v${info.versionName}/NabdAlDhikr.apk"
                     }
                     return@withContext UpdateState.UpdateAvailable(info.copy(apkUrl = resolvedApkUrl))
                 } else if (info != null) {
@@ -151,7 +154,7 @@ object AppUpdateManager {
                     for (element in assets) {
                         val assetObj = element.asJsonObject
                         val name = assetObj.get("name")?.asString ?: ""
-                        if (name.endsWith(".apk", ignoreCase = true)) {
+                        if (name.equals("NabdAlDhikr.apk", ignoreCase = true) || name.endsWith(".apk", ignoreCase = true)) {
                             apkDownloadUrl = assetObj.get("browser_download_url")?.asString ?: ""
                             break
                         }
@@ -161,7 +164,7 @@ object AppUpdateManager {
                 // If no asset found directly, build standard release URL
                 if (apkDownloadUrl.isEmpty()) {
                     apkDownloadUrl =
-                        "https://github.com/$GITHUB_OWNER/$GITHUB_REPO/releases/download/$tagName/app-release.apk"
+                        "https://github.com/$GITHUB_OWNER/$GITHUB_REPO/releases/download/$tagName/NabdAlDhikr.apk"
                 }
 
                 val remoteVersionName = tagName.removePrefix("v").trim()
@@ -274,18 +277,36 @@ object AppUpdateManager {
     }
 
     /**
+     * Checks if install permission from unknown sources is granted.
+     */
+    fun canInstallPackages(context: Context): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.packageManager.canRequestPackageInstalls()
+        } else {
+            true
+        }
+    }
+
+    /**
+     * Opens Settings to grant unknown app install permission for this app.
+     */
+    fun openInstallPermissionSettings(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val manageIntent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
+                data = Uri.parse("package:${context.packageName}")
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(manageIntent)
+        }
+    }
+
+    /**
      * Checks unknown sources install permission and triggers package installation.
      */
     fun triggerInstall(context: Context, apkFile: File) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (!context.packageManager.canRequestPackageInstalls()) {
-                val manageIntent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
-                    data = Uri.parse("package:${context.packageName}")
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-                context.startActivity(manageIntent)
-                return
-            }
+        if (!canInstallPackages(context)) {
+            openInstallPermissionSettings(context)
+            return
         }
 
         val apkUri: Uri = FileProvider.getUriForFile(
@@ -320,6 +341,27 @@ fun AppUpdateDialog(
     var totalMb by remember { mutableFloatStateOf(0f) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
     var downloadedFile by remember { mutableStateOf<File?>(null) }
+    var awaitingPermission by remember { mutableStateOf(false) }
+    var hasInstallPermission by remember { mutableStateOf(AppUpdateManager.canInstallPackages(context)) }
+
+    // Automatically check permission when user returns to app and resume installation
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                val granted = AppUpdateManager.canInstallPackages(context)
+                hasInstallPermission = granted
+                if (granted && awaitingPermission && downloadedFile != null && downloadedFile!!.exists()) {
+                    awaitingPermission = false
+                    AppUpdateManager.triggerInstall(context, downloadedFile!!)
+                }
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
 
     Dialog(
         onDismissRequest = {
@@ -463,6 +505,37 @@ fun AppUpdateDialog(
                     }
                 }
 
+                // Permission guidance card if installation permission is needed
+                if (downloadedFile != null && !hasInstallPermission) {
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Surface(
+                        shape = RoundedCornerShape(12.dp),
+                        color = HeaderBg,
+                        border = androidx.compose.foundation.BorderStroke(1.dp, PrimaryGold.copy(alpha = 0.5f)),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(12.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = "🔐 مطلوب إذن تثبيت التحديث",
+                                fontWeight = FontWeight.Bold,
+                                color = PrimaryGold,
+                                fontSize = 13.sp
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "لتثبيت التحديث تلقائياً، يرجى تفعيل إذن تثبيت التطبيقات من هذا المصدر، وسيتم استكمال التثبيت فوراً عند العودة.",
+                                color = TextSecondary,
+                                fontSize = 11.sp,
+                                textAlign = TextAlign.Center,
+                                lineHeight = 16.sp
+                            )
+                        }
+                    }
+                }
+
                 Spacer(modifier = Modifier.height(20.dp))
 
                 // Action Buttons
@@ -482,10 +555,22 @@ fun AppUpdateDialog(
                         }
                     }
 
+                    val buttonText = when {
+                        isDownloading -> "جاري التحميل..."
+                        downloadedFile != null && !hasInstallPermission -> "منح إذن التثبيت"
+                        downloadedFile != null -> "تثبيت الآن"
+                        else -> "تحديث الآن"
+                    }
+
                     Button(
                         onClick = {
                             if (downloadedFile != null && downloadedFile!!.exists()) {
-                                AppUpdateManager.triggerInstall(context, downloadedFile!!)
+                                if (hasInstallPermission) {
+                                    AppUpdateManager.triggerInstall(context, downloadedFile!!)
+                                } else {
+                                    awaitingPermission = true
+                                    AppUpdateManager.openInstallPermissionSettings(context)
+                                }
                             } else {
                                 isDownloading = true
                                 errorMessage = null
@@ -502,7 +587,12 @@ fun AppUpdateDialog(
                                     isDownloading = false
                                     result.onSuccess { file ->
                                         downloadedFile = file
-                                        AppUpdateManager.triggerInstall(context, file)
+                                        if (AppUpdateManager.canInstallPackages(context)) {
+                                            AppUpdateManager.triggerInstall(context, file)
+                                        } else {
+                                            awaitingPermission = true
+                                            AppUpdateManager.openInstallPermissionSettings(context)
+                                        }
                                     }.onFailure { err ->
                                         errorMessage = err.localizedMessage ?: "فشل التحميل"
                                     }
@@ -518,7 +608,7 @@ fun AppUpdateDialog(
                         enabled = !isDownloading
                     ) {
                         Text(
-                            text = if (downloadedFile != null) "تثبيت الآن" else if (isDownloading) "جاري التحميل..." else "تحديث الآن",
+                            text = buttonText,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
                         )

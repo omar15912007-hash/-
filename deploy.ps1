@@ -67,7 +67,7 @@ $jsonContent = @"
 {
   "versionCode": $newCode,
   "versionName": "$newVersion",
-  "apkUrl": "https://github.com/omar15912007-hash/Nabd-Al-Dhikr/releases/download/$tagName/app-release.apk",
+  "apkUrl": "https://github.com/omar15912007-hash/Nabd-Al-Dhikr/releases/download/$tagName/NabdAlDhikr.apk",
   "changelog": "$Message",
   "forceUpdate": $isForce
 }

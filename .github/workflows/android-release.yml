@@ -73,13 +73,13 @@ jobs:
       - name: 📦 Prepare Release Artifacts
         run: |
           mkdir -p release-artifacts
-          APK_PATH="app/build/outputs/apk/release/app-release.apk"
+          APK_FOUND=$(find app/build/outputs/apk/release -type f -name "*.apk" | head -n 1)
           
-          if [ -f "$APK_PATH" ]; then
-            cp "$APK_PATH" "release-artifacts/app-release.apk"
-            cp "$APK_PATH" "release-artifacts/NabdAlDhikr-v${{ env.VERSION_NAME }}.apk"
+          if [ -n "$APK_FOUND" ] && [ -f "$APK_FOUND" ]; then
+            echo "Found APK at $APK_FOUND"
+            cp "$APK_FOUND" "release-artifacts/NabdAlDhikr.apk"
           else
-            echo "Error: APK not found at $APK_PATH"
+            echo "Error: Release APK not found in app/build/outputs/apk/release"
             exit 1
           fi
 
@@ -88,7 +88,7 @@ jobs:
             if [ -f "version.json" ]; then
               CHANGELOG=$(jq -r '.changelog // "تحسينات عامة وإصلاحات."' version.json 2>/dev/null || echo "تحسينات عامة وإصلاحات.")
             else
-              CHANGELOG="إصدار جديد لتطبيق نبض الذكر v${{ env.VERSION_NAME }}."
+              CHANGELOG="إصدار موحد شامل لتطبيق نبض الذكر v${{ env.VERSION_NAME }}."
             fi
           fi
 
@@ -97,7 +97,7 @@ jobs:
           {
             "versionCode": ${{ env.VERSION_CODE }},
             "versionName": "${{ env.VERSION_NAME }}",
-            "apkUrl": "https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}/app-release.apk",
+            "apkUrl": "https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}/NabdAlDhikr.apk",
             "changelog": "$CHANGELOG",
             "forceUpdate": false
           }
@@ -120,19 +120,17 @@ jobs:
           body: |
             ### 🌟 نبض الذكر (Nabd Al-Dhikr) - ${{ env.TAG_NAME }}
             
-            تطبيق إسلامي حديث ومتطور للأندرويد.
+            تطبيق إسلامي موحد، فائق الخفة وشامل لجميع أجهزة الأندرويد.
             
-            #### 📱 التغييرات والمميزات:
-            ${{ github.event.inputs.changelog || '• موسوعة الأذكار الشاملة والمحققة (171 ذكراً عبر 28 قسماً).\n• محدد اتجاه القبلة الذكي فلكياً.\n• السبحة الإلكترونية الذكية التفاعلية.\n• نظام التحديث التلقائي المباشر (OTA Self-Update).' }}
+            #### 📱 المميزات والتحسينات في هذا الإصدار:
+            ${{ github.event.inputs.changelog || '• ملف تثبيت موحد (NabdAlDhikr.apk) لجميع المعماريات والأجهزة.\n• إدارة متكاملة وسلسة لكافة الأذونات (تثبيت التحديثات، إشعارات الأذكار، وتحديد اتجاه القبلة).\n• نظام تحديث تلقائي داخلي بضغطة زر واحدة (OTA Self-Update).\n• موسوعة أذكار حصن المسلم المحققة كاملاً مع السبحة وبوصلة القبلة الفلكية.' }}
             
             ---
-            **حجم التطبيق:** ~2.22 MB  
-            **ملف التثبيت المباشر:** `app-release.apk`
+            **حجم التطبيق:** ~2.3 MB  
+            **الملف الرسمي الموحد:** `NabdAlDhikr.apk`
           draft: false
           prerelease: false
           files: |
-            release-artifacts/app-release.apk
-            release-artifacts/NabdAlDhikr-v${{ env.VERSION_NAME }}.apk
-            release-artifacts/version.json
+            release-artifacts/NabdAlDhikr.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

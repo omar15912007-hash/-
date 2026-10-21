@@ -17,11 +17,21 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android%20%7C%20PC-3DDC84.svg?style=flat-square&logo=android" alt="Platform: Android | PC" />
+  <img src="https://img.shields.io/badge/Supported%20OS-Android%208.0%20(Oreo)%20to%2015%2B-orange.svg?style=flat-square&logo=android" alt="Android 8.0 to 15+" />
   <img src="https://img.shields.io/badge/Open%20Source-to%20download%20on%20PC-blue.svg?style=flat-square&logo=github" alt="Open Source to download on PC" />
   <img src="https://img.shields.io/badge/Language-Kotlin-7F52FF.svg?style=flat-square&logo=kotlin" alt="Language" />
   <img src="https://img.shields.io/badge/UI-Jetpack%20Compose-4285F4.svg?style=flat-square&logo=jetpackcompose" alt="Compose" />
   <img src="https://img.shields.io/badge/APK%20Size-2.22%20MB-brightgreen.svg?style=flat-square" alt="Size" />
 </p>
+
+---
+
+## 📱 Supported Android Versions | إصدارات أندرويد المدعومة
+
+* **Minimum Supported Version | الحد الأدنى المدعوم:** **Android 8.0 (API 26 — Oreo)**
+* **Target / Tested Version | الإصدار المستهدف والمختبر:** **Android 15 & 16 (API 35 / 36 — Vanilla Ice Cream)**
+* **Global Compatibility | نسبة التوافق العالمية:** Works flawlessly on **over 95%** of all active Android smartphones, tablets, and emulators worldwide.  
+  *(يعمل بكفاءة وتوافق تام على أكثر من 95% من كافة هواتف وأجهزة أندرويد والمحاكيات حول العالم من أندرويد 8.0 حتى أحدث إصدار أندرويد 15 و 16)*.
 
 ---
 

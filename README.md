@@ -5,58 +5,77 @@
 </p>
 
 <p align="center">
-  <strong>A modern, ultra-lightweight, and authentic Islamic Android application.</strong><br>
+  <strong>A modern, ultra-lightweight, and authentic Islamic application for Android & PC.</strong><br>
   <em>تطبيق إسلامي حديث، فائق الخفة، ومحقق للأندرويد والكمبيوتر</em>
 </p>
 
 <p align="center">
-  <a href="https://github.com/omar15912007-hash/-/releases/latest">
-    <img src="https://img.shields.io/badge/Download-Latest%20APK%20(2.2%20MB)-0D5C3A?style=for-the-badge&logo=android&logoColor=white" alt="Download APK" />
+  <a href="https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk">
+    <img src="https://img.shields.io/badge/Download-NabdAlDhikr--v1.0.0.apk%20(2.2%20MB)-0D5C3A?style=for-the-badge&logo=android&logoColor=white" alt="Download APK" />
   </a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Platform-Android%20%7C%20PC-3DDC84.svg?style=flat-square&logo=android" alt="Platform" />
+  <img src="https://img.shields.io/badge/Platform-Android%20%7C%20PC-3DDC84.svg?style=flat-square&logo=android" alt="Platform: Android | PC" />
+  <img src="https://img.shields.io/badge/Open%20Source-to%20download%20on%20PC-blue.svg?style=flat-square&logo=github" alt="Open Source to download on PC" />
   <img src="https://img.shields.io/badge/Language-Kotlin-7F52FF.svg?style=flat-square&logo=kotlin" alt="Language" />
   <img src="https://img.shields.io/badge/UI-Jetpack%20Compose-4285F4.svg?style=flat-square&logo=jetpackcompose" alt="Compose" />
   <img src="https://img.shields.io/badge/APK%20Size-2.22%20MB-brightgreen.svg?style=flat-square" alt="Size" />
-  <img src="https://img.shields.io/badge/License-Free%20%26%20Open-gold.svg?style=flat-square" alt="License" />
 </p>
 
 ---
 
 ## 📖 Overview | نبذة عن التطبيق
 
-**Nabd Al-Dhikr (نبض الذكر)** is built from the ground up using 100% native Android technologies (**Kotlin**, **Jetpack Compose Material 3**, and **Clean Architecture + MVVM**). Engineered for maximum battery efficiency, instant responsiveness (60fps), and an ultra-compact footprint (**only 2.22 MB**), it provides essential daily spiritual tools without advertisements or internet dependency.
+**Nabd Al-Dhikr (نبض الذكر)** is a 100% native Islamic application engineered with **Kotlin**, **Jetpack Compose Material 3**, and **Clean Architecture + MVVM**. Optimized for fluid 60fps performance and an ultra-compact size of **just 2.22 MB**, it delivers complete offline peace of mind without ads or trackers.
 
 > **نبذة بالعربية:**  
-> تم بناء تطبيق **نبض الذكر** بأحدث تقنيات أندرويد الأصلية بنسبة 100%، وبحجم فائق الصغر (**2.22 ميجابايت فقط**) واستهلاك شبه منعدم للبطارية والذاكرة (RAM). يجمع التطبيق بين الأذكار اليومية المحققة، محدد القبلة الفلكي، والسبحة الذكية مع نظام تحديث تلقائي فوري.
+> تم بناء تطبيق **نبض الذكر** بأحدث تقنيات أندرويد الأصلية بنسبة 100% وبحجم فائق الصغر (**2.22 ميجابايت فقط**) ليعمل بكفاءة على الهواتف والكمبيوتر بدون إعلانات وبدون استهلاك للإنترنت.
 
 ---
 
-## 📲 How to Download & Install (دليل التحميل والتثبيت بالعربية)
+## 📲 How to Download & Run | دليل التحميل والتشغيل
 
-### أ. خطوات التثبيت على الهاتف المحمول (Android):
-1. **تحميل التطبيق:** اضغط على الرابط المباشر:  
-   👉 **[تحميل ملف NabdAlDhikr-v1.0.0.apk (اضغط هنا)](https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk)**
-2. **فتح الملف:** افتح الملف من الإشعارات أو من مجلد التنزيلات (Downloads).
-3. **منح الإذن والتثبيت:** إذا طُلب منك السماح بتثبيت التطبيقات من مصادر غير معروفة، فعّل الإذن واضغط **تثبيت (Install)**.
-4. **التحديث التلقائي:** مستقبلاً، سيقوم التطبيق بتحديث نفسه بضغطة زر داخلية دون الحاجة لإعادة التحميل اليدوي.
+### 💻 Running on PC (4 Steps) | تشغيل التطبيق على الكمبيوتر في 4 خطوات
+
+Because Nabd Al-Dhikr is open source, you can run the application on any Windows or Mac computer in 4 simple steps:  
+*(بما أن تطبيق نبض الذكر مفتوح المصدر، يمكنك تشغيله على أي جهاز كمبيوتر يعمل بنظام ويندوز أو ماك في 4 خطوات بسيطة):*
+
+1. **Step 1 — Download the APK | الخطوة 1 — تحميل ملف التطبيق:**  
+   Download the direct APK file: **[`NabdAlDhikr-v1.0.0.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk)**  
+   *(حمّل الملف مباشرة عبر الرابط: [`NabdAlDhikr-v1.0.0.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk))*.
+
+2. **Step 2 — Install an Emulator | الخطوة 2 — تنزيل محاكي خفيف:**  
+   Download and install any free lightweight Android emulator on your PC, such as [LDPlayer](https://www.ldplayer.net/), [BlueStacks](https://www.bluestacks.com/), or [NoxPlayer](https://www.bignox.com/).  
+   *(حمّل وثبّت أي محاكي أندرويد مجاني وخفيف على حاسوبك مثل LDPlayer أو BlueStacks أو NoxPlayer)*.
+
+3. **Step 3 — Drag & Drop | الخطوة 3 — سحب وإفلات:**  
+   Drag the downloaded **[`NabdAlDhikr-v1.0.0.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk)** file and drop it into the emulator window to install in seconds.  
+   *(اسحب ملف الـ APK المحمّل وأفلته داخل نافذة المحاكي المفتوحة ليتم تثبيته في ثانيتين)*.
+
+4. **Step 4 — Launch & Enjoy | الخطوة 4 — التشغيل والاستخدام:**  
+   Click the **Nabd Al-Dhikr** icon on the emulator screen and enjoy all Adhkar and Tasbeeh features with mouse and keyboard!  
+   *(اضغط على أيقونة نبض الذكر في شاشة المحاكي وابدأ في قراءة الأذكار واستخدام السبحة بالماوس بكل سهولة)*.
 
 ---
 
-### ب. خطوات تشغيل التطبيق على الكمبيوتر (PC / Windows / Mac في 4 خطوات):
+### 📱 Installing on Android Phone (4 Steps) | خطوات التثبيت على الهاتف المحمول (4 خطوات)
 
-لتشغيل التطبيق على شاشة الكمبيوتر الكبيرة والتحكم بالماوس ولوحة المفاتيح:
+1. **Step 1 — Download | الخطوة 1 — التحميل:**  
+   Download the direct APK file: **[`NabdAlDhikr-v1.0.0.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk)**  
+   *(حمّل الملف مباشرة: [`NabdAlDhikr-v1.0.0.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk))*.
 
-1. **تحميل ملف التطبيق:**  
-   حمّل ملف **[`NabdAlDhikr-v1.0.0.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk)** على جهاز الكمبيوتر.
-2. **تنزيل أي محاكي أندرويد خفيف:**  
-   إذا لم يكن لديك محاكي، حمّل أي محاكي خفيف ومجاني مثل [LDPlayer](https://www.ldplayer.net/) أو [BlueStacks](https://www.bluestacks.com/) أو [NoxPlayer](https://www.bignox.com/) وثبّته.
-3. **سحب وإفلات الملف (Drag & Drop):**  
-   اسحب ملف الـ APK الذي حمّلته وأفلته داخل نافذة المحاكي المفتوحة، وسيتم تثبيته تلقائياً خلال ثانيتين فقط.
-4. **فتح التطبيق:**  
-   اضغط على أيقونة **نبض الذكر** من واجهة المحاكي وابدأ في قراءة الأذكار واستخدام السبحة بالماوس بكل سهولة وسلاسة!
+2. **Step 2 — Open the File | الخطوة 2 — فتح الملف:**  
+   Tap the downloaded APK from your notification bar or Downloads folder.  
+   *(اضغط على الملف المحمّل من شريط الإشعارات أو من مجلد التنزيلات)*.
+
+3. **Step 3 — Allow & Install | الخطوة 3 — السماح والتثبيت:**  
+   If prompted, enable *"Allow from this source"* in Settings, then tap **Install**.  
+   *(إذا ظهر لك تنبيه أمني، فعّل السماح بالتثبيت من هذا المصدر ثم اضغط تثبيت)*.
+
+4. **Step 4 — Auto-Update Ready | الخطوة 4 — ميزة التحديث التلقائي:**  
+   The app is equipped with an integrated OTA auto-updater; future releases will notify and update directly inside the app!  
+   *(التطبيق مزوّد بنظام تحديث تلقائي داخلي سيتكفل بتحديث التطبيق تلقائياً عند صدور أي إصدار جديد)*.
 
 ---
 
@@ -65,7 +84,6 @@
 ### 1. Complete & Verified Adhkar Encyclopedia | موسوعة الأذكار الشاملة والمحققة
 - **171 Adhkar across 28 categories** directly sourced from *Hisn al-Muslim (حصن المسلم)*.
 - Full vocalized Arabic (Tashkeel), English translation, virtue references, Hadith sourcing, and interactive repetition counters.
-- Covers Morning & Evening Adhkar, Sleep & Waking, Prayer & Adhan, Travel, Protection, and Quranic Supplications.
 > **عربياً:** 171 ذكراً مشكولاً ومحققاً من حصن المسلم عبر 28 قسماً مع تخريج الحديث وفضل الذكر وترجمة إنجليزية كاملة.
 
 ### 2. Astronomical Qibla Finder | محدد القبلة الذكي فلكياً
@@ -73,7 +91,7 @@
 - Magnetic declination correction to Geographic True North via `GeomagneticField`.
 - 60fps angular low-pass filter preventing 0°/360° needle bounce.
 - Haptic pulse feedback and emerald glow upon accurate alignment ($\pm 3^\circ$).
-> **عربياً:** حساب فلكي كروي دقيق لزاوية القبلة والمسافة لمكة، مع بوصلة 60 إطاراً في الثانية واهتزاز تفاعلي عند مطابقة القبلة.
+> **عربياً:** حساب فلكي كروي دقيق لزاوية القبلة والمسافة لمكة، مع بوصلة 60 إطاراً واهتزاز تفاعلي عند مطابقة القبلة.
 
 ### 3. Smart Digital Tasbih | السبحة الإلكترونية الذكية
 - Digital counter with customizable targets (33, 100, or unlimited).
@@ -86,9 +104,9 @@
 - Local offline favorites stored via Jetpack DataStore Preferences.
 > **عربياً:** محرك بحث ذكي يتجاهل علامات التشكيل لتسهيل الوصول للأذكار، مع ميزة حفظ الأذكار المفضلة بدون إنترنت.
 
-### 5. Scheduled Daily Reminders | التنبيهات المجدولة
-- Battery-friendly background notifications scheduled using Android Jetpack `WorkManager`.
-> **عربياً:** تذكيرات يومية ذكية بأذكار الصباح والمساء بأقل استهلاك ممكن للبطارية.
+### 5. In-App Auto-Update | نظام التحديث التلقائي المباشر
+- Built-in zero-rate-limit OTA updater checking `version.json` via CDN and direct GitHub Release downloads.
+> **عربياً:** محرك تحديث داخلي مدمج يفحص التحديثات الجديدة تلقائياً بدون أي قيود أو حدود استهلاك.
 
 ---
 

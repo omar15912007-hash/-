@@ -1,4 +1,4 @@
-# 📿 Nabd Al-Dhikr (نبض الذكر) - v1.0.0
+# 📿 Nabd Al-Dhikr (نبض الذكر) - v1.0.1
 
 <p align="center">
   <img src="app/src/main/res/drawable/app_logo.png" alt="Nabd Al-Dhikr Logo" width="128" height="128" />
@@ -10,8 +10,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk">
-    <img src="https://img.shields.io/badge/Download-NabdAlDhikr--v1.0.0.apk%20(2.2%20MB)-0D5C3A?style=for-the-badge&logo=android&logoColor=white" alt="Download APK" />
+  <a href="https://github.com/omar15912007-hash/-/releases/download/v1.0.1/NabdAlDhikr-v1.0.1.apk">
+    <img src="https://img.shields.io/badge/Download-NabdAlDhikr--v1.0.1.apk%20(2.2%20MB)-0D5C3A?style=for-the-badge&logo=android&logoColor=white" alt="Download APK" />
   </a>
 </p>
 
@@ -52,15 +52,15 @@ Because Nabd Al-Dhikr is open source, you can run the application on any Windows
 *(بما أن تطبيق نبض الذكر مفتوح المصدر، يمكنك تشغيله على أي جهاز كمبيوتر يعمل بنظام ويندوز أو ماك في 4 خطوات بسيطة):*
 
 1. **Step 1 — Download the APK | الخطوة 1 — تحميل ملف التطبيق:**  
-   Download the direct APK file: **[`NabdAlDhikr-v1.0.0.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk)**  
-   *(حمّل الملف مباشرة عبر الرابط: [`NabdAlDhikr-v1.0.0.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk))*.
+   Download the direct APK file: **[`NabdAlDhikr-v1.0.1.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.1/NabdAlDhikr-v1.0.1.apk)**  
+   *(حمّل الملف مباشرة عبر الرابط: [`NabdAlDhikr-v1.0.1.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.1/NabdAlDhikr-v1.0.1.apk))*.
 
 2. **Step 2 — Install an Emulator | الخطوة 2 — تنزيل محاكي خفيف:**  
    Download and install any free lightweight Android emulator on your PC, such as [LDPlayer](https://www.ldplayer.net/), [BlueStacks](https://www.bluestacks.com/), or [NoxPlayer](https://www.bignox.com/).  
    *(حمّل وثبّت أي محاكي أندرويد مجاني وخفيف على حاسوبك مثل LDPlayer أو BlueStacks أو NoxPlayer)*.
 
 3. **Step 3 — Drag & Drop | الخطوة 3 — سحب وإفلات:**  
-   Drag the downloaded **[`NabdAlDhikr-v1.0.0.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk)** file and drop it into the emulator window to install in seconds.  
+   Drag the downloaded **[`NabdAlDhikr-v1.0.1.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.1/NabdAlDhikr-v1.0.1.apk)** file and drop it into the emulator window to install in seconds.  
    *(اسحب ملف الـ APK المحمّل وأفلته داخل نافذة المحاكي المفتوحة ليتم تثبيته في ثانيتين)*.
 
 4. **Step 4 — Launch & Enjoy | الخطوة 4 — التشغيل والاستخدام:**  
@@ -72,8 +72,8 @@ Because Nabd Al-Dhikr is open source, you can run the application on any Windows
 ### 📱 Installing on Android Phone (4 Steps) | خطوات التثبيت على الهاتف المحمول (4 خطوات)
 
 1. **Step 1 — Download | الخطوة 1 — التحميل:**  
-   Download the direct APK file: **[`NabdAlDhikr-v1.0.0.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk)**  
-   *(حمّل الملف مباشرة: [`NabdAlDhikr-v1.0.0.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.0/NabdAlDhikr-v1.0.0.apk))*.
+   Download the direct APK file: **[`NabdAlDhikr-v1.0.1.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.1/NabdAlDhikr-v1.0.1.apk)**  
+   *(حمّل الملف مباشرة: [`NabdAlDhikr-v1.0.1.apk`](https://github.com/omar15912007-hash/-/releases/download/v1.0.1/NabdAlDhikr-v1.0.1.apk))*.
 
 2. **Step 2 — Open the File | الخطوة 2 — فتح الملف:**  
    Tap the downloaded APK from your notification bar or Downloads folder.  
